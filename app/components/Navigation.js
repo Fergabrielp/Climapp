@@ -1,0 +1,73 @@
+import React from 'react';
+import { View, Text, StyleSheet, StatusBar } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { Icon, TabView } from 'react-native-elements'
+import Home from './Home';
+import List from './List';
+import Search from './Search';
+
+const Stack = createNativeStackNavigator();
+const Tab = createBottomTabNavigator();
+
+const Navigation = () => {
+    return (
+        <>
+        <StatusBar
+          backgroundColor="#FFc107"
+          barStyle='dark-content'
+        />
+            <NavigationContainer>
+                <Tab.Navigator
+                    screenOptions={({ route }) => ({
+                        tabBarIcon: ({ color }) => screenOptions(route, color),
+                        tabBarStyle:{
+                            backgroundColor: '#FFc107',
+                            borderRadius: 30,
+                            borderColor: '#000',
+                            borderWidth: 3, 
+                            position: 'absolute',
+                            left: 60,
+                            right: 60,
+                            bottom: 30,
+                        },
+                        tabBarActiveTintColor: '#000',
+                        tabBarInactiveTintColor: '#777',
+                        headerShown: false,
+                        tabBarShowLabel: false,
+                    })
+                }
+                >
+                    <Tab.Screen name="Home" component={Home}/>
+                    <Tab.Screen name="List" component={List}/>
+                    <Stack.Screen name="Search" component={Search}/>
+                </Tab.Navigator>
+            </NavigationContainer>
+        </>
+    )
+}
+
+
+
+const styles = StyleSheet.create({
+})
+
+function screenOptions(route, color){
+    let iconName;
+    switch (route.name) {
+        case "Home":
+            iconName = "home-outline"
+            break;
+        case "List":
+            iconName = "format-list-bulleted"
+            break;
+        default:
+            break;
+    }
+    return(
+        <Icon type="material-community" name={iconName} size={34} color={color} />
+    )
+}
+
+export default Navigation

@@ -1,0 +1,8 @@
+Navigation : npm install @react-navigation/native
+Safe Area : npm install react-native-screens react-native-safe-area-context
+Stack : npm install @react-navigation/native-stack
+Gesture handler: npm install --save react-native-gesture-handler
+Bottom Tabs: npm install @react-navigation/bottom-tabs
+Iconos de Elements: npm install react-native-elements
+                    npm install react-native-vector-icons
+                    npx react-native link react-native-vector-icons
