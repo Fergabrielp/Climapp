@@ -1,11 +1,65 @@
+import { CommonActions } from '@react-navigation/routers';
 import React, {useState, useEffect} from 'react';
 import { StyleSheet, Text, View, TextInput, TouchableOpacity} from 'react-native';
 import { Icon } from 'react-native-elements';
+const API_KEY ='ede3ca5b2d0912688b80ead9e3f0d2d2';
 
 const Search = () => {
+  const[ciudadBuscada, setCiudadBuscada] = useState('');
+  const[posiblesCiudades, setPosiblesCiudades] = useState([{}]);
+
+  useEffect(()=> {
+    if (ciudadBuscada.length > 3) {
+      fetchDataFromApi()
+    }
+  },[ciudadBuscada])
+  
+  const fetchDataFromApi = () => {
+    //http://api.openweathermap.org/geo/1.0/direct?q={city name},{state code},{country code}&limit={limit}&appid={API key}
+    fetch(`https://api.openweathermap.org/geo/1.0/direct?q=${ciudadBuscada},AR&limit=20&appid=${API_KEY}`)
+
+    // la siguiente anda para buscar el clima y coordenadas por ciudad
+    // fetch(`https://api.openweathermap.org/data/2.5/weather?q=${ciudadBuscada},AR&appid=${API_KEY}`)
+    .then(res => res.json())
+    .then(data =>{
+      console.log(data)
+      let cont = 0
+      setPosiblesCiudades([{}])
+      Object.entries(data).forEach(([key, value]) => {
+        // console.log(`${key}: ${value}`)
+        setPosiblesCiudades(posiblesCiudades => [...posiblesCiudades, {id:cont, lat:value.lat, lon:value.lon, name:value.name}]);
+        cont++
+        // console.log(posiblesCiudades)
+        // console.log(cont)
+      });
+
+    })
+  }
+
+  const list = () => {
+      return posiblesCiudades.map((element) => {
+        console.log("dentro del map")
+        console.log(element)
+        console.log(element.id)
+        console.log(element.name)
+        console.log("posiblesCiudades")
+        console.log(posiblesCiudades)
+        if( typeof element.id !== 'undefined') {
+          return (
+            <View key={`${element.id}id`} style={styles.buscar}>
+              {/* <Text key={`${element.id}name`}>Ciudad: {element.name}</Text>
+              <Text key={`${element.id}lat`}>Lat: {element.lat}</Text>
+              <Text key={`${element.id}lon`}>Lon: {element.lon}</Text> */}
+              <Text key={`${element.id}name`}>{element.name}</Text>
+              <Text key={`${element.id}lat`}>Lat: {element.lat} Lon: {element.lon}</Text>
+            </View>
+          );
+        }
+      });
+  };
+
 
   return (
-
     <View style={styles.container}>
       
       <Text style={styles.title}>AGREGAR NUEVA CIUDAD</Text>
@@ -14,8 +68,15 @@ const Search = () => {
         <TextInput 
           style={styles.buscar_txt}
           placeholder='Buscar ciudad...'
-          placeholderTextColor= '#999'  
+          placeholderTextColor= '#999'
+          onChangeText={setCiudadBuscada}
+          value={ciudadBuscada}
         ></TextInput>
+      </View>
+
+
+      <View>
+        {list()}
       </View>
 
       <View style={styles.map}>
