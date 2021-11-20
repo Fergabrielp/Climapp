@@ -2,11 +2,14 @@ import { CommonActions } from '@react-navigation/routers';
 import React, {useState, useEffect} from 'react';
 import { StyleSheet, Text, View, TextInput, TouchableOpacity} from 'react-native';
 import { Icon } from 'react-native-elements';
+import MapView from 'react-native-maps';
 const API_KEY ='ede3ca5b2d0912688b80ead9e3f0d2d2';
+import Map from '../components/Map';
 
 const Search = () => {
   const[ciudadBuscada, setCiudadBuscada] = useState('');
   const[posiblesCiudades, setPosiblesCiudades] = useState([{}]);
+  const[ciudadElegida, setCiudadElegida] = useState({lat:34.60, lon:122.43, name:"Ciudad de Buenos Aires"});
 
   useEffect(()=> {
     if (ciudadBuscada.length > 3) {
@@ -82,6 +85,9 @@ const Search = () => {
       <View style={styles.map}>
         <Text>Aca mostrar el mapa...</Text>
       </View>
+      {/* <Map props={ciudadElegida.lat} lon={ciudadElegida.lon}></Map> */}
+      <Map></Map>
+
 
       <TouchableOpacity style={styles.btn_accept}>
         <Icon name="check" type='material-community' color='#FFF'/>
