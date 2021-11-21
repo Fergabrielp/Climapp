@@ -3,6 +3,7 @@ import React, {useState, useEffect} from 'react';
 import { StyleSheet, Text, View, TextInput, TouchableOpacity} from 'react-native';
 import { Button, Icon } from 'react-native-elements';
 import Map from '../components/Map';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 const API_KEY ='ede3ca5b2d0912688b80ead9e3f0d2d2';
 
 const Search = ({navigation}) => {
@@ -16,7 +17,7 @@ const Search = ({navigation}) => {
       fetchDataFromApi()
     }
   },[ciudadBuscada,ciudadElegida])
-  
+
   const fetchDataFromApi = () => {
     //http://api.openweathermap.org/geo/1.0/direct?q={city name},{state code},{country code}&limit={limit}&appid={API key}
     fetch(`https://api.openweathermap.org/geo/1.0/direct?q=${ciudadBuscada},AR&limit=20&appid=${API_KEY}`)
@@ -39,6 +40,16 @@ const Search = ({navigation}) => {
     })
   }
 
+  const storeData = async (value) => {
+    try {
+      const jsonValue = JSON.stringify(value)
+      await AsyncStorage.setItem('ciudad', jsonValue)
+    } catch (e) {
+      console.log("error al guardar los datos");
+      console.log(e);
+    }
+  }
+
   const list = () => {
 
       return posiblesCiudades.map((element) => {
@@ -58,7 +69,11 @@ const Search = ({navigation}) => {
                 style={styles.listaItemButtonMapa}/>
               <TouchableOpacity 
                 style={styles.listaItemButtonAccept} 
-                onPress={()=> navigation.popToTop()}
+                onPress={()=> {
+                  storeData({lat: Number(`${element.lat}`), lon: Number(`${element.lon}`), name:`${element.name}`});
+                  // navigation.popToTop();
+                  navigation.navigate('List');
+                }}
                 >
                 <Icon name="check" type='material-community' color='#FFF'/>
               </TouchableOpacity>

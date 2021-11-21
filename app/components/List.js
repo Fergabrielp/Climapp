@@ -1,10 +1,46 @@
-import React from 'react'
+import React, {useState, useEffect} from 'react';
 import { Icon } from 'react-native-elements'
 import { View, Text, StyleSheet, FlatList, ImageBackground, TouchableOpacity} from 'react-native'
-
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useIsFocused } from '@react-navigation/native';
 
 const List = ({navigation}) => {
+    const[ciudades, setCiudades] = useState('');
+    const isFocused = useIsFocused();
 
+    useEffect(() => {
+    getData();
+    console.log(ciudades);
+    },[isFocused]);
+
+    const storeData = async (value) => {
+        try {
+          const jsonValue = JSON.stringify(value)
+          await AsyncStorage.setItem('ciudad', jsonValue)
+        } catch (e) {
+          console.log("error al guardar los datos");
+          console.log(e);
+    
+        }
+      }
+    
+      const getData = async () => {
+        try {
+          const jsonValue = await AsyncStorage.getItem('ciudad')
+          if( jsonValue != null ) {
+            console.log("---------------");  
+            console.log(jsonValue);
+            setCiudades(JSON.parse(jsonValue));
+            console.log(JSON.parse(jsonValue));
+          }else {
+            console.log("no hay ciudades guardadas");
+          } 
+    
+        } catch(e) {
+          console.log("error al leer los datos");
+          console.log(e);
+        }
+      }
 
     return (
         <View style={styles.container}>
@@ -13,12 +49,10 @@ const List = ({navigation}) => {
                     <Text style={styles.title}>Listado de ciudades</Text>
                 </View>
                 
-                <FlatList style={styles.container_flat}>
-
-
-
-
-                </FlatList>
+                {/* <FlatList />
+                </FlatList> */}
+                    <Text style={styles.title}>ciudades</Text>
+                    <Text style={styles.title}>{ciudades.name}</Text>
                 
                 <TouchableOpacity 
                     style={styles.btn}
