@@ -2,22 +2,20 @@ import React from 'react';
 import { View, Text, StyleSheet, StatusBar } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { Icon, TabView } from 'react-native-elements'
 import Home from './Home';
-import List from './List';
-import Search from './Search';
+import ListScreenStack from './ListScreenStack';
 
-const Stack = createNativeStackNavigator();
+
 const Tab = createBottomTabNavigator();
 
 const Navigation = () => {
     return (
         <>
-        <StatusBar
-          backgroundColor="#FFc107"
-          barStyle='dark-content'
-        />
+            <StatusBar
+            backgroundColor="#FFc107"
+            barStyle='dark-content'
+            />
             <NavigationContainer>
                 <Tab.Navigator
                     screenOptions={({ route }) => ({
@@ -37,11 +35,15 @@ const Navigation = () => {
                         headerShown: false,
                         tabBarShowLabel: false,
                     })
-                }
+                    }
                 >
                     <Tab.Screen name="Home" component={Home}/>
-                    <Tab.Screen name="List" component={List}/>
-                    <Stack.Screen name="Search" component={Search}/>
+                    <Tab.Screen name="ListStack" component={ListScreenStack}/>
+                    {/* <Stack.Screen name="Search" component={Search}/> */}
+                    {/* <Stack.Navigator>
+                        <Stack.Screen name="Search" component={Search}/>
+                    </Stack.Navigator> */}
+
                 </Tab.Navigator>
             </NavigationContainer>
         </>
@@ -59,7 +61,7 @@ function screenOptions(route, color){
         case "Home":
             iconName = "home-outline"
             break;
-        case "List":
+        case "ListStack":
             iconName = "format-list-bulleted"
             break;
         default:

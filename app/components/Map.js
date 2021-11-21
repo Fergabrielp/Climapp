@@ -22,7 +22,7 @@ function Map(props) {
     if (mapaVisible){
         return (
             <MapView 
-                style={styles.map}
+                style={styles.mapCiudad}
                 region={location}
             >
                 <Marker coordinate={{ latitude: Number(lat), longitude: Number(lon), }} />
@@ -36,11 +36,14 @@ function Map(props) {
 export default Map
 
 const styles = StyleSheet.create({
-    map:{
+    mapCiudad:{
+        // borderColor: '#000',
+        // borderWidth: 2,
         // alignItems: 'center',
-        // marginTop: 80,
+        // marginTop: 10,
+        // marginHorizontal: 10,
         width: '100%',
-        height: '50%',
+        height: '60%',
         marginBottom: 30
       }
 })

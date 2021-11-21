@@ -5,7 +5,7 @@ import { Button, Icon } from 'react-native-elements';
 import Map from '../components/Map';
 const API_KEY ='ede3ca5b2d0912688b80ead9e3f0d2d2';
 
-const Search = () => {
+const Search = ({navigation}) => {
   const[ciudadBuscada, setCiudadBuscada] = useState('');
   const[posiblesCiudades, setPosiblesCiudades] = useState([{}]);
   const[ciudadElegida, setCiudadElegida] = useState({lat:-34, lon:-58, name:"Ciudad de Buenos Aires"});
@@ -56,7 +56,10 @@ const Search = () => {
                 }}
                 title="Mapa" 
                 style={styles.listaItemButtonMapa}/>
-              <TouchableOpacity style={styles.listaItemButtonAccept}>
+              <TouchableOpacity 
+                style={styles.listaItemButtonAccept} 
+                onPress={()=> navigation.popToTop()}
+                >
                 <Icon name="check" type='material-community' color='#FFF'/>
               </TouchableOpacity>
             </View>
@@ -129,8 +132,14 @@ const styles = StyleSheet.create({
     fontSize: 26
   },
   map:{
+    // borderRadius: 15,
+    // borderColor: '#000',
+    // borderWidth: 2,
     alignItems: 'center',
     marginTop: 10,
+    marginHorizontal: 10,
+    // marginBottom: 30
+
   },
   // btn_accept:{
   //   borderRadius: 100,
