@@ -4,6 +4,8 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Icon, TabView } from 'react-native-elements'
 import Home from './Home';
+import Nosotros from './Nosotros';
+
 import ListScreenStack from './ListScreenStack';
 
 
@@ -39,10 +41,7 @@ const Navigation = () => {
                 >
                     <Tab.Screen name="Home" component={Home}/>
                     <Tab.Screen name="ListStack" component={ListScreenStack}/>
-                    {/* <Stack.Screen name="Search" component={Search}/> */}
-                    {/* <Stack.Navigator>
-                        <Stack.Screen name="Search" component={Search}/>
-                    </Stack.Navigator> */}
+                    <Tab.Screen name="Nosotros" component={Nosotros}/>
 
                 </Tab.Navigator>
             </NavigationContainer>
@@ -63,6 +62,9 @@ function screenOptions(route, color){
             break;
         case "ListStack":
             iconName = "format-list-bulleted"
+            break;
+        case "Nosotros":
+            iconName = "information-outline"
             break;
         default:
             break;

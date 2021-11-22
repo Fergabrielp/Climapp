@@ -26,10 +26,10 @@ const List = ({navigation}) => {
         try {
           const jsonValue = await AsyncStorage.getItem('ciudades')
           if( jsonValue != null ) {
-            console.log("------ en List ---------");  
-            console.log(jsonValue);
+            // console.log("------ en List ---------");  
+            // console.log(jsonValue);
             setCiudadesGuardadas(JSON.parse(jsonValue));
-            console.log(JSON.parse(jsonValue));
+            // console.log(JSON.parse(jsonValue));
           }else {
             console.log("no hay ciudades guardadas");
           } 
@@ -40,14 +40,14 @@ const List = ({navigation}) => {
       }
 
       const eliminarCiudad = (ItemId) => {
-        console.log("desde eliminar ciudadesGuardadas");
-        console.log(ItemId);
+        // console.log("desde eliminar ciudadesGuardadas");
+        // console.log(ItemId);
         setCiudadesGuardadas( (ciudadesGuardadas) => {
             return ciudadesGuardadas.filter( ciudad => (ciudad.id != ItemId) );
         })
         storeData(ciudadesGuardadas);
-        console.log("desde eliminar ciudadesGuardadas");
-        console.log(ciudadesGuardadas);
+        // console.log("desde eliminar ciudadesGuardadas");
+        // console.log(ciudadesGuardadas);
       };
 
     const renderItem = ({ item }) => (
@@ -118,11 +118,12 @@ const styles = StyleSheet.create({
         fontSize: 30,
         fontWeight: 'bold',
         color: '#FFF',
-        textAlign: 'center'
+        textAlign: 'center',
+        marginBottom: 10,
     },
     container_flat:{
-        // marginTop: 20,
-        width: '70%',
+        marginBottom: 20,
+        width: '80%',
     },
     itemsBox:{
         // backgroundColor: '#F21',
@@ -135,7 +136,7 @@ const styles = StyleSheet.create({
         borderWidth: 2,
         marginTop: 10,
         marginHorizontal: 10,
-        paddingHorizontal: 20,
+        paddingHorizontal: 10,
         paddingVertical: 5,
         alignItems:'center',
         backgroundColor: '#FFF',
@@ -144,16 +145,16 @@ const styles = StyleSheet.create({
         flex: 1,
         fontSize: 20,
         fontWeight: 'bold',
+        paddingHorizontal: 10,
       },
     listaItemButton:{
         padding: 5,
-        margin: 15,
+        margin: 10,
         borderRadius: 100,
         height: 30,
         width: 30,
         borderColor: '#000',
         borderWidth: 1,
-        margin: 15,
         padding: 2,
         backgroundColor: '#388E3C',
         elevation: 10
