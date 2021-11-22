@@ -70,9 +70,10 @@ const List = ({navigation}) => {
                 </TouchableOpacity>
             </View>
         </View>
-
-      );
+    );
     
+    const ciudadesAMostrar = ciudadesGuardadas.filter(item => item.hasOwnProperty('id'));
+
     return (
         <View style={styles.container}>
             <ImageBackground source={require('../assets/img/background.jpg')} style={styles.img}>
@@ -81,7 +82,7 @@ const List = ({navigation}) => {
                 </View>
                 
                 <FlatList style={styles.container_flat}
-                    data={ciudadesGuardadas}
+                    data={ciudadesAMostrar}
                     renderItem={renderItem}
                     keyExtractor={ciudad => ciudad.id}
                 />
