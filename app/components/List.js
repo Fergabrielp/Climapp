@@ -56,7 +56,7 @@ const List = ({navigation}) => {
                 <Text style={styles.listaItemName} key={`${item.id}name`}>{item.name}</Text>
                 <TouchableOpacity
                     style={styles.listaItemButton} 
-                    onPress={()=> {navigation.navigate('Clima');}}
+                    onPress={()=> {navigation.navigate('Clima',{lat: item.lat, lon: item.lon, name: item.name });}}
                     key={`${item.id}clima`}
                     >
                     <Icon name="weather-cloudy" type='material-community' color='#FFF' key={`${item.id}icon1`}/>

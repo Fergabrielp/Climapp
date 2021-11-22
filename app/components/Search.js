@@ -11,11 +11,10 @@ const API_KEY ='ede3ca5b2d0912688b80ead9e3f0d2d2';
 const Search = ({navigation}) => {
   const[ciudadBuscada, setCiudadBuscada] = useState('');
   const[posiblesCiudades, setPosiblesCiudades] = useState([{}]);
-  const[ciudadElegida, setCiudadElegida] = useState({id:"-34_-58", lat:-34, lon:-58, name:"Ciudad de Buenos Aires"});
+  const[ciudadElegida, setCiudadElegida] = useState({});
   const[mapaVisible,setMapaVisible] = useState(false);
   const[ciudadesGuardadas, setCiudadesGuardadas] = useState([{}]);
 
-  // const[ciudades, setCiudades] = useState([{}]);
   const isFocused = useIsFocused();
 
   useEffect(() => {
@@ -29,11 +28,8 @@ const Search = ({navigation}) => {
   },[ciudadBuscada,ciudadElegida])
 
   const fetchDataFromApi = () => {
-    //http://api.openweathermap.org/geo/1.0/direct?q={city name},{state code},{country code}&limit={limit}&appid={API key}
     fetch(`https://api.openweathermap.org/geo/1.0/direct?q=${ciudadBuscada},AR&limit=20&appid=${API_KEY}`)
     
-    // la siguiente anda para buscar el clima y coordenadas por ciudad
-    // fetch(`https://api.openweathermap.org/data/2.5/weather?q=${ciudadBuscada},AR&appid=${API_KEY}`)
     .then(res => res.json())
     .then(data =>{
       let cont = 0
@@ -62,10 +58,10 @@ const Search = ({navigation}) => {
     try {
       const jsonValue = await AsyncStorage.getItem('ciudades')
       if( jsonValue != null ) {
-        console.log("---------------");  
-        console.log(jsonValue);
+        // console.log("---------------");  
+        // console.log(jsonValue);
         setCiudadesGuardadas(JSON.parse(jsonValue));
-        console.log(JSON.parse(jsonValue));
+        // console.log(JSON.parse(jsonValue));
       }else {
         console.log("no hay ciudades guardadas");
       } 
@@ -97,7 +93,6 @@ const Search = ({navigation}) => {
                 style={styles.listaItemButtonAccept} 
                 onPress={()=> {
                   // const ciudadesNuevas=[{id: `${element.lat}_${element.lon}`, lat: Number(`${element.lat}`), lon: Number(`${element.lon}`), name:`${element.name}`}];
-                  
                   const ciudadesNuevas=[...ciudadesGuardadas, {id: `${element.lat}_${element.lon}`, lat: Number(`${element.lat}`), lon: Number(`${element.lon}`), name:`${element.name}`}];
                   setCiudadesGuardadas(ciudadesNuevas);
                   storeData(ciudadesNuevas);
@@ -135,17 +130,8 @@ const Search = ({navigation}) => {
       </View>
 
       <View style={styles.map}  key="mapa">
-        {/* <Text>Aca mostrar el mapa...</Text> */}
         <Map lat={ciudadElegida.lat} lon={ciudadElegida.lon} mapaVisible={mapaVisible}></Map>
       </View>
-
-      {/* <TouchableOpacity style={styles.btn_accept}>
-        <Icon name="check" type='material-community' color='#FFF'/>
-      </TouchableOpacity>
-
-      <TouchableOpacity style={styles.btn_cancel}>
-        <Icon name="close" type='material-community' color='#FFF'/>
-      </TouchableOpacity> */}
 
     </View>
 
