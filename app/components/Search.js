@@ -4,13 +4,23 @@ import { StyleSheet, Text, View, TextInput, TouchableOpacity} from 'react-native
 import { Button, Icon } from 'react-native-elements';
 import Map from '../components/Map';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useIsFocused } from '@react-navigation/native';
+
 const API_KEY ='ede3ca5b2d0912688b80ead9e3f0d2d2';
 
 const Search = ({navigation}) => {
   const[ciudadBuscada, setCiudadBuscada] = useState('');
   const[posiblesCiudades, setPosiblesCiudades] = useState([{}]);
-  const[ciudadElegida, setCiudadElegida] = useState({lat:-34, lon:-58, name:"Ciudad de Buenos Aires"});
+  const[ciudadElegida, setCiudadElegida] = useState({id:"-34_-58", lat:-34, lon:-58, name:"Ciudad de Buenos Aires"});
   const[mapaVisible,setMapaVisible] = useState(false);
+  const[ciudadesGuardadas, setCiudadesGuardadas] = useState([{}]);
+
+  // const[ciudades, setCiudades] = useState([{}]);
+  const isFocused = useIsFocused();
+
+  useEffect(() => {
+    getData();
+  },[isFocused]);
 
   useEffect(()=> {
     if (ciudadBuscada.length > 3) {
@@ -26,7 +36,6 @@ const Search = ({navigation}) => {
     // fetch(`https://api.openweathermap.org/data/2.5/weather?q=${ciudadBuscada},AR&appid=${API_KEY}`)
     .then(res => res.json())
     .then(data =>{
-      // console.log(data)
       let cont = 0
       setPosiblesCiudades([{}])
       Object.entries(data).forEach(([key, value]) => {
@@ -34,7 +43,6 @@ const Search = ({navigation}) => {
         setPosiblesCiudades(posiblesCiudades => [...posiblesCiudades, {id:cont, lat:value.lat, lon:value.lon, name:value.name}]);
         cont++
         // setMapaVisible(false);
-        // console.log(posiblesCiudades)
       });
 
     })
@@ -43,39 +51,62 @@ const Search = ({navigation}) => {
   const storeData = async (value) => {
     try {
       const jsonValue = JSON.stringify(value)
-      await AsyncStorage.setItem('ciudad', jsonValue)
+      await AsyncStorage.setItem('ciudades', jsonValue)
     } catch (e) {
       console.log("error al guardar los datos");
       console.log(e);
     }
   }
 
+  const getData = async () => {
+    try {
+      const jsonValue = await AsyncStorage.getItem('ciudades')
+      if( jsonValue != null ) {
+        console.log("---------------");  
+        console.log(jsonValue);
+        setCiudadesGuardadas(JSON.parse(jsonValue));
+        console.log(JSON.parse(jsonValue));
+      }else {
+        console.log("no hay ciudades guardadas");
+      } 
+
+    } catch(e) {
+      console.log("error al leer los datos");
+      console.log(e);
+    }
+  }
   const list = () => {
 
       return posiblesCiudades.map((element) => {
         if( typeof element.id !== 'undefined') {
           return (
             <View key={`${element.id}id`} style={styles.listaItem}>
-              <View style={styles.listaItemDatos}>
+              <View style={styles.listaItemDatos} key={`${element.id}datos`}>
                 <Text key={`${element.id}name`} style={styles.listaItemName}>{element.name}</Text>
                 <Text key={`${element.id}latlon`} style={styles.listaItemLatLon}>Lat: {element.lat} Lon: {element.lon}</Text>
               </View>
               <Button 
                 onPress={()=>{
-                  setCiudadElegida({lat: Number(`${element.lat}`), lon: Number(`${element.lon}`), name:`${element.name}`});
+                  setCiudadElegida({id: `${element.lat}_${element.lon}`, lat: Number(`${element.lat}`), lon: Number(`${element.lon}`), name:`${element.name}`});
                   setMapaVisible(true);
                 }}
                 title="Mapa" 
-                style={styles.listaItemButtonMapa}/>
+                style={styles.listaItemButtonMapa}
+                key={`${element.id}botonMapa`}/>
               <TouchableOpacity 
                 style={styles.listaItemButtonAccept} 
                 onPress={()=> {
-                  storeData({lat: Number(`${element.lat}`), lon: Number(`${element.lon}`), name:`${element.name}`});
+                  // const ciudadesNuevas=[{id: `${element.lat}_${element.lon}`, lat: Number(`${element.lat}`), lon: Number(`${element.lon}`), name:`${element.name}`}];
+                  
+                  const ciudadesNuevas=[...ciudadesGuardadas, {id: `${element.lat}_${element.lon}`, lat: Number(`${element.lat}`), lon: Number(`${element.lon}`), name:`${element.name}`}];
+                  setCiudadesGuardadas(ciudadesNuevas);
+                  storeData(ciudadesNuevas);
                   // navigation.popToTop();
                   navigation.navigate('List');
                 }}
+                key={`${element.id}botonOk`}
                 >
-                <Icon name="check" type='material-community' color='#FFF'/>
+                <Icon name="check" type='material-community' color='#FFF' key={`${element.id}icono`}/>
               </TouchableOpacity>
             </View>
           );
@@ -99,11 +130,11 @@ const Search = ({navigation}) => {
         ></TextInput>
       </View>
 
-      <View>
+      <View key="listaCiudades">
         {list()}
       </View>
 
-      <View style={styles.map}>
+      <View style={styles.map}  key="mapa">
         {/* <Text>Aca mostrar el mapa...</Text> */}
         <Map lat={ciudadElegida.lat} lon={ciudadElegida.lon} mapaVisible={mapaVisible}></Map>
       </View>

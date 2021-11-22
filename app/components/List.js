@@ -5,43 +5,74 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useIsFocused } from '@react-navigation/native';
 
 const List = ({navigation}) => {
-    const[ciudades, setCiudades] = useState('');
+  const[ciudadesGuardadas, setCiudadesGuardadas] = useState([{}]);
     const isFocused = useIsFocused();
 
     useEffect(() => {
-    getData();
-    console.log(ciudades);
+        getData();
     },[isFocused]);
 
     const storeData = async (value) => {
         try {
           const jsonValue = JSON.stringify(value)
-          await AsyncStorage.setItem('ciudad', jsonValue)
+          await AsyncStorage.setItem('ciudades', jsonValue)
         } catch (e) {
           console.log("error al guardar los datos");
           console.log(e);
-    
         }
       }
     
       const getData = async () => {
         try {
-          const jsonValue = await AsyncStorage.getItem('ciudad')
+          const jsonValue = await AsyncStorage.getItem('ciudades')
           if( jsonValue != null ) {
-            console.log("---------------");  
+            console.log("------ en List ---------");  
             console.log(jsonValue);
-            setCiudades(JSON.parse(jsonValue));
+            setCiudadesGuardadas(JSON.parse(jsonValue));
             console.log(JSON.parse(jsonValue));
           }else {
             console.log("no hay ciudades guardadas");
           } 
-    
         } catch(e) {
           console.log("error al leer los datos");
           console.log(e);
         }
       }
 
+      const eliminarCiudad = (ItemId) => {
+        console.log("desde eliminar ciudadesGuardadas");
+        console.log(ItemId);
+        setCiudadesGuardadas( (ciudadesGuardadas) => {
+            return ciudadesGuardadas.filter( ciudad => (ciudad.id != ItemId) );
+        })
+        storeData(ciudadesGuardadas);
+        console.log("desde eliminar ciudadesGuardadas");
+        console.log(ciudadesGuardadas);
+      };
+
+    const renderItem = ({ item }) => (
+        <View style={styles.itemsBox} key={`${item.id}lista`}>
+            <View style={styles.listaItem} key={`${item.id}bloque`}>
+                <Text style={styles.listaItemName} key={`${item.id}name`}>{item.name}</Text>
+                <TouchableOpacity
+                    style={styles.listaItemButton} 
+                    onPress={()=> {navigation.navigate('Clima');}}
+                    key={`${item.id}clima`}
+                    >
+                    <Icon name="weather-cloudy" type='material-community' color='#FFF' key={`${item.id}icon1`}/>
+                </TouchableOpacity>
+                <TouchableOpacity
+                    style={styles.listaItemButton} 
+                    onPress={()=> {eliminarCiudad(item.id)}}
+                    key={`${item.id}eliminar`}
+                    >
+                    <Icon name="trash-can-outline" type='material-community' color='#FFF' key={`${item.id}icon2`}/>
+                </TouchableOpacity>
+            </View>
+        </View>
+
+      );
+    
     return (
         <View style={styles.container}>
             <ImageBackground source={require('../assets/img/background.jpg')} style={styles.img}>
@@ -49,11 +80,12 @@ const List = ({navigation}) => {
                     <Text style={styles.title}>Listado de ciudades</Text>
                 </View>
                 
-                {/* <FlatList />
-                </FlatList> */}
-                    <Text style={styles.title}>ciudades</Text>
-                    <Text style={styles.title}>{ciudades.name}</Text>
-                
+                <FlatList style={styles.container_flat}
+                    data={ciudadesGuardadas}
+                    renderItem={renderItem}
+                    keyExtractor={ciudad => ciudad.id}
+                />
+
                 <TouchableOpacity 
                     style={styles.btn}
                     activeOpacity={0.6}
@@ -78,13 +110,54 @@ const styles = StyleSheet.create({
         resizeMode: 'cover'
     },
     container_title:{
-        flex: 0.1,
+        // flex: 0.1,
         marginTop: 50
     },
-    container_flat:{
-        marginTop: 20,
-    },
     title:{
+        fontSize: 30,
+        fontWeight: 'bold',
+        color: '#FFF',
+        textAlign: 'center'
+    },
+    container_flat:{
+        // marginTop: 20,
+        width: '70%',
+    },
+    itemsBox:{
+        // backgroundColor: '#F21',
+    },
+    listaItem:{
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        borderRadius: 15,
+        borderColor: '#000',
+        borderWidth: 2,
+        marginTop: 10,
+        marginHorizontal: 10,
+        paddingHorizontal: 20,
+        paddingVertical: 5,
+        alignItems:'center',
+        backgroundColor: '#FFF',
+    },
+    listaItemName:{
+        flex: 1,
+        fontSize: 20,
+        fontWeight: 'bold',
+      },
+    listaItemButton:{
+        padding: 5,
+        margin: 15,
+        borderRadius: 100,
+        height: 30,
+        width: 30,
+        borderColor: '#000',
+        borderWidth: 1,
+        margin: 15,
+        padding: 2,
+        backgroundColor: '#388E3C',
+        elevation: 10
+    },
+    titleName:{
         fontSize: 30,
         fontWeight: 'bold',
         color: '#FFF',
