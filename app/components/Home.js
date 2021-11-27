@@ -42,7 +42,6 @@ const Home = () => {
                 <Text style={styles.text}>Bienvenida/o a <Text style={styles.span}>Climapp</Text>, esta aplicacion le permitira
                 guardar el pronostico de todas las ciudades que usted desee, con la posibilidad de acceder a ellas
                 en cualquier momento y en cualquier sitio.
-
                 </Text>
             </View>
             </ImageBackground>
@@ -85,12 +84,14 @@ const styles = StyleSheet.create({
         backgroundColor: '#FFF',
         borderRadius: 15,
         margin: 20,
-        padding: 5
+        padding: 6,
+        borderColor: '#FFc107',
+        borderWidth: 5
     },
     text:{
         color: '#000',
         padding: 15,
-        fontSize: 20,
+        fontSize: 22,
         textAlign: 'center'
     },
     span:{

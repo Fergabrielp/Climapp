@@ -62,7 +62,7 @@ const List = ({navigation}) => {
                     <Icon name="weather-cloudy" type='material-community' color='#FFF' key={`${item.id}icon1`}/>
                 </TouchableOpacity>
                 <TouchableOpacity
-                    style={styles.listaItemButton} 
+                    style={styles.listaItemButtonDelete} 
                     onPress={()=> {eliminarCiudad(item.id)}}
                     key={`${item.id}eliminar`}
                     >
@@ -115,14 +115,14 @@ const styles = StyleSheet.create({
         marginTop: 50
     },
     title:{
-        fontSize: 30,
+        fontSize: 35,
         fontWeight: 'bold',
         color: '#FFF',
         textAlign: 'center',
-        marginBottom: 10,
+        marginBottom: 30,
     },
     container_flat:{
-        marginBottom: 20,
+        marginBottom: 150,
         width: '80%',
     },
     itemsBox:{
@@ -143,9 +143,10 @@ const styles = StyleSheet.create({
     },
     listaItemName:{
         flex: 1,
-        fontSize: 20,
+        fontSize: 22,
         fontWeight: 'bold',
-        paddingHorizontal: 10,
+        paddingLeft: 22,
+        color: '#000'
       },
     listaItemButton:{
         padding: 5,
@@ -159,6 +160,18 @@ const styles = StyleSheet.create({
         backgroundColor: '#388E3C',
         elevation: 10
     },
+    listaItemButtonDelete:{
+        padding: 5,
+        margin: 10,
+        borderRadius: 100,
+        height: 30,
+        width: 30,
+        borderColor: '#000',
+        borderWidth: 1,
+        padding: 2,
+        backgroundColor: 'red',
+        elevation: 10
+    },
     titleName:{
         fontSize: 30,
         fontWeight: 'bold',
@@ -166,7 +179,7 @@ const styles = StyleSheet.create({
         textAlign: 'center'
     },
     btn: {
-        backgroundColor: '#3098DB',
+        backgroundColor: '#FFc107',
         justifyContent: 'center',
         borderRadius: 100,
         borderWidth: 2,
@@ -174,7 +187,7 @@ const styles = StyleSheet.create({
         width: 70,
         alignSelf: 'flex-end',
         right: 20,
-        bottom: 120,
+        bottom: 130,
         shadowColor: "#000",
         elevation: 10
       },

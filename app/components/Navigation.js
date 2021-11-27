@@ -21,21 +21,27 @@ const Navigation = () => {
             <NavigationContainer>
                 <Tab.Navigator
                     screenOptions={({ route }) => ({
+                        tabBarHideOnKeyboard: true,
                         tabBarIcon: ({ color }) => screenOptions(route, color),
                         tabBarStyle:{
-                            backgroundColor: '#FFc107',
-                            borderRadius: 30,
-                            borderColor: '#000',
-                            borderWidth: 3, 
+                            backgroundColor: '#222',
+                            borderRadius: 10,
+                            borderColor: '#FFc107',
+                            borderTopColor: '#FFc107',
+                            borderTopWidth: 3,
+                            borderWidth:3, 
                             position: 'absolute',
                             left: 60,
                             right: 60,
-                            bottom: 30,
+                            bottom: 50,
+                            height: 60,
+                            elevation: 0
                         },
-                        tabBarActiveTintColor: '#000',
-                        tabBarInactiveTintColor: '#777',
+                        tabBarActiveTintColor: '#FFc107',
+                        tabBarInactiveTintColor: '#FFF',
                         headerShown: false,
                         tabBarShowLabel: false,
+                        
                     })
                     }
                 >

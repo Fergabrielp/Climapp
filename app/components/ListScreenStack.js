@@ -12,6 +12,7 @@ function ListScreenStack() {
     return (
         <Stack.Navigator>
           <Stack.Screen
+              options={{headerShown: false}}
               name="List"
               component={List}
           />

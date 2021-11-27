@@ -216,11 +216,13 @@ const styles = StyleSheet.create({
   },
   listaItemName:{
     flex: 1,
-    fontSize: 16,
+    fontSize: 20,
     fontWeight: 'bold',
+    color: '#000'
   },
   listaItemLatLon:{
     flex: 1,
+    color: '#000'
   },
   listaItemButtonMapa:{
     flex: 1,
@@ -245,5 +247,3 @@ const styles = StyleSheet.create({
 });
 
 export default Search;
-
-
