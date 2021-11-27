@@ -58,10 +58,7 @@ const Search = ({navigation}) => {
     try {
       const jsonValue = await AsyncStorage.getItem('ciudades')
       if( jsonValue != null ) {
-        // console.log("---------------");  
-        // console.log(jsonValue);
         setCiudadesGuardadas(JSON.parse(jsonValue));
-        // console.log(JSON.parse(jsonValue));
       }else {
         console.log("no hay ciudades guardadas");
       } 
@@ -92,10 +89,19 @@ const Search = ({navigation}) => {
               <TouchableOpacity 
                 style={styles.listaItemButtonAccept} 
                 onPress={()=> {
-                  // const ciudadesNuevas=[{id: `${element.lat}_${element.lon}`, lat: Number(`${element.lat}`), lon: Number(`${element.lon}`), name:`${element.name}`}];
-                  const ciudadesNuevas=[...ciudadesGuardadas, {id: `${element.lat}_${element.lon}`, lat: Number(`${element.lat}`), lon: Number(`${element.lon}`), name:`${element.name}`}];
-                  setCiudadesGuardadas(ciudadesNuevas);
-                  storeData(ciudadesNuevas);
+                  //si la ciudad no esta ya guardada, la guardo
+                  let repetida = false;
+                  ciudadesGuardadas.forEach( x => {
+                    if(Object.values(x)[0]=== `${element.lat}_${element.lon}`){
+                      repetida = true;
+                    } 
+                  })
+                if(!repetida){
+                    // const ciudadesNuevas=[{id: `${element.lat}_${element.lon}`, lat: Number(`${element.lat}`), lon: Number(`${element.lon}`), name:`${element.name}`}];
+                    const ciudadesNuevas=[...ciudadesGuardadas, {id: `${element.lat}_${element.lon}`, lat: Number(`${element.lat}`), lon: Number(`${element.lon}`), name:`${element.name}`}];
+                    setCiudadesGuardadas(ciudadesNuevas);
+                    storeData(ciudadesNuevas);
+                  }
                   // navigation.popToTop();
                   navigation.navigate('List');
                 }}
