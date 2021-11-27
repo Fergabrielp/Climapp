@@ -6,7 +6,7 @@ import { useIsFocused } from '@react-navigation/native';
 import SearchBar from './SearchBar';
 
 const List = ({navigation}) => {
-  const[ciudadesGuardadas, setCiudadesGuardadas] = useState([{}]);
+  const [ciudadesGuardadas, setCiudadesGuardadas] = useState([{}]);
   const [searchPhrase, setSearchPhrase] = useState("");
   const [clicked, setClicked] = useState(false);
 
@@ -16,6 +16,7 @@ const List = ({navigation}) => {
       getData();
   },[isFocused]);
 
+  // guardo las ciudades en el Storage, se guarda el array completo de ciudades cada vez 
   const storeData = async (value) => {
     try {
       const jsonValue = JSON.stringify(value)
@@ -25,7 +26,7 @@ const List = ({navigation}) => {
       console.log(e);
     }
   }
-    
+  //  leo las ciudades que estan guardadas en el Storage y actualizo el estado con ellas 
   const getData = async () => {
     try {
       const jsonValue = await AsyncStorage.getItem('ciudades')
@@ -39,67 +40,73 @@ const List = ({navigation}) => {
       console.log(e);
     }
   }
+// eliminar ciudad del State, en realidad se guarda un nuevo array sin esa ciudad 
 
   const eliminarCiudad = (ItemId) => {
     setCiudadesGuardadas( (ciudadesGuardadas) => {
       return ciudadesGuardadas.filter( ciudad => (ciudad.id != ItemId) );
     })
-    storeData(ciudadesGuardadas);
   };
-
+  
+  // datos que se van a renderizar en el flatlist
   const renderItem = ({ item }) => {
-  // si no tengo que aplicar filtro 
-  if (searchPhrase === "") {
-    return (
-      <View style={styles.itemsBox} key={`${item.id}lista`}>
-        <View style={styles.listaItem} key={`${item.id}bloque`}>
-          <Text style={styles.listaItemName} key={`${item.id}name`}>{item.name}</Text>
-          <TouchableOpacity
-            style={styles.listaItemButton} 
-            onPress={()=> {navigation.navigate('Clima',{lat: item.lat, lon: item.lon, name: item.name });}}
-            key={`${item.id}clima`}
-            >
-            <Icon name="weather-cloudy" type='material-community' color='#FFF' key={`${item.id}icon1`}/>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.listaItemButton} 
-            onPress={()=> {eliminarCiudad(item.id)}}
-            key={`${item.id}eliminar`}
-            >
-            <Icon name="trash-can-outline" type='material-community' color='#FFF' key={`${item.id}icon2`}/>
-          </TouchableOpacity>
+  // si no tengo que aplicar filtro del buscador, muestro todas las ciudades
+    if (searchPhrase === "") {
+      return (
+        <View style={styles.itemsBox} key={`${item.id}lista`}>
+          <View style={styles.listaItem} key={`${item.id}bloque`}>
+            <Text style={styles.listaItemName} key={`${item.id}name`}>{item.name}</Text>
+            <TouchableOpacity
+              style={styles.listaItemButton} 
+              onPress={()=> {navigation.navigate('Clima',{lat: item.lat, lon: item.lon, name: item.name });}}
+              key={`${item.id}clima`}
+              >
+              <Icon name="weather-cloudy" type='material-community' color='#FFF' key={`${item.id}icon1`}/>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.listaItemButton} 
+              onPress={()=> {
+                eliminarCiudad(item.id);
+                storeData(ciudadesGuardadas.filter( ciudad => (ciudad.id != item.id) ))
+              }}
+              key={`${item.id}eliminar`}
+              >
+              <Icon name="trash-can-outline" type='material-community' color='#FFF' key={`${item.id}icon2`}/>
+            </TouchableOpacity>
+          </View>
         </View>
-      </View>
-    )
-  }
-  // si ingresaron una ciudad en el buscador 
-  if (item.name.toUpperCase().includes(searchPhrase.toUpperCase())) {
-    return (
-      <View style={styles.itemsBox} key={`${item.id}lista`}>
-        <View style={styles.listaItem} key={`${item.id}bloque`}>
-          <Text style={styles.listaItemName} key={`${item.id}name`}>{item.name}</Text>
-          <TouchableOpacity
-            style={styles.listaItemButton} 
-            onPress={()=> {navigation.navigate('Clima',{lat: item.lat, lon: item.lon, name: item.name });}}
-            key={`${item.id}clima`}
-            >
-            <Icon name="weather-cloudy" type='material-community' color='#FFF' key={`${item.id}icon1`}/>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.listaItemButton} 
-            onPress={()=> {eliminarCiudad(item.id)}}
-            key={`${item.id}eliminar`}
-            >
-            <Icon name="trash-can-outline" type='material-community' color='#FFF' key={`${item.id}icon2`}/>
-          </TouchableOpacity>
+      )
+    }
+    // si ingresaron una ciudad en el buscador 
+    if (item.name.toUpperCase().includes(searchPhrase.toUpperCase())) {
+      return (
+        <View style={styles.itemsBox} key={`${item.id}lista`}>
+          <View style={styles.listaItem} key={`${item.id}bloque`}>
+            <Text style={styles.listaItemName} key={`${item.id}name`}>{item.name}</Text>
+            <TouchableOpacity
+              style={styles.listaItemButton} 
+              onPress={()=> {navigation.navigate('Clima',{lat: item.lat, lon: item.lon, name: item.name });}}
+              key={`${item.id}clima`}
+              >
+              <Icon name="weather-cloudy" type='material-community' color='#FFF' key={`${item.id}icon1`}/>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.listaItemButton} 
+              onPress={()=> {
+                eliminarCiudad(item.id);
+                storeData(ciudadesGuardadas.filter( ciudad => (ciudad.id != item.id) ))
+              }}
+              key={`${item.id}eliminar`}
+              >
+              <Icon name="trash-can-outline" type='material-community' color='#FFF' key={`${item.id}icon2`}/>
+            </TouchableOpacity>
+          </View>
         </View>
-      </View>
-    )
-  }
-
-};
-
-const ciudadesAMostrar = ciudadesGuardadas.filter(item => item.hasOwnProperty('id'));
+      )
+    }
+  };
+// en ciudadesAMostrar filtro que no haya un objeto vacio 
+let ciudadesAMostrar = ciudadesGuardadas.filter(item => item.hasOwnProperty('id'));
 
 return (
   <View style={styles.container}>

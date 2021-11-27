@@ -1,14 +1,5 @@
 import React from "react";
-import {
-  StyleSheet,
-  Text,
-  View,
-  ScrollView,
-  ImageBackground,
-  Image,
-  StatusBar,
-  Linking,
-} from "react-native";
+import { StyleSheet, Text, View, ScrollView, ImageBackground, Image, StatusBar, Linking } from "react-native";
 import { SocialIcon } from "react-native-elements/dist/social/SocialIcon";
 import Animacion1 from "../components/Animacion1";
 
@@ -31,82 +22,87 @@ export default function Nosotros() {
             <Text style={styles.textos1}>
               Somos un grupo de desarrolladores conformados por:
             </Text>
-            <View>
-              <Text style={styles.nombres}>
-                - Maria de la Paz Marzana
-                <SocialIcon
-                  type="linkedin"
-                  onPress={() =>
-                    Linking.openURL(
-                      "https://www.linkedin.com/in/maria-de-la-paz-marzana/"
-                    )
-                  }
-                ></SocialIcon>
-              </Text>
-            </View>
-            <View>
+            <View style={styles.datosPersonales}>
               <Text style={styles.nombres}>
                 - Fernando Perez
-                <SocialIcon
-                  type="linkedin"
-                  onPress={() =>
-                    Linking.openURL(
-                      "https://www.linkedin.com/in/maria-de-la-paz-marzana/"
-                    )
-                  }
-                ></SocialIcon>
               </Text>
+              <SocialIcon style={styles.iconosSociales}
+                iconSize={20}
+                type="github"
+                onPress={() =>
+                  Linking.openURL(
+                    "https://github.com/Fergabrielp"
+                  )
+                }
+              ></SocialIcon>
             </View>
-            <View>
+            <View style={styles.datosPersonales}>
               <Text style={styles.nombres}>
                 - Juan Fernandez
-                <SocialIcon
-                  type="linkedin"
-                  onPress={() =>
-                    Linking.openURL(
-                      "https://www.linkedin.com/in/juan-fern%C3%A1ndez-ige/"
-                    )
-                  }
-                ></SocialIcon>
-                {"\n"}
               </Text>
+              <SocialIcon style={styles.iconosSociales}
+                iconSize={18}
+                type="linkedin"
+                onPress={() =>
+                  Linking.openURL(
+                    "https://www.linkedin.com/in/juan-fern%C3%A1ndez-ige/"
+                  )
+                }
+              ></SocialIcon>
+              <SocialIcon style={styles.iconosSociales}
+                iconSize={20}
+                type="github"
+                onPress={() =>
+                  Linking.openURL(
+                    "https://github.com/juanferaco27"
+                  )
+                }
+              ></SocialIcon>
+            </View>
+            <View style={styles.datosPersonales}>
+              <Text style={styles.nombres}>
+                - Maria de la Paz Marzana
+              </Text>
+              <SocialIcon style={styles.iconosSociales}
+                iconSize={18}
+                type="linkedin"
+                onPress={() =>
+                  Linking.openURL(
+                    "https://www.linkedin.com/in/maria-de-la-paz-marzana/"
+                  )
+                }
+              ></SocialIcon>
+              <SocialIcon style={styles.iconosSociales}
+                iconSize={20}
+                type="github"
+                onPress={() =>
+                  Linking.openURL(
+                    "https://github.com/pazmarzana"
+                  )
+                }
+              ></SocialIcon>
             </View>
           </View>
           <Text style={styles.textos}>
-            En la búsqueda de una solución para obtener información sobre el
-            clima de localidades o ciudades (en este caso de Argentina), se ha
-            desarrollado una App donde se pueden realizar búsquedas brindando la
-            posibilidad de luego agregar los resultados (ciudades) a un listado,
-            el cual permite acceder a dichas ciudades más rápido. En este
-            listado de ciudades guardadas también podemos eliminar dichas
-            ciudades si así lo deseara el usuario.
+            En la búsqueda de una solución para obtener información sobre el clima de ciertas ciudades de Argentina,
+            se ha desarrollado una App que brinda un listado customizado de ciudades que permite ver el clima actual
+            de la ciudad seleccionada. Para agregar ciudades, se provee un buscador y se da la posibilidad de visualizar
+            un mapa de la ciudad antes de que sea agregada al listado.
           </Text>
           <Text style={styles.textos}>
             Para el desarrollo de esta App se ha utilizado la API OpenWeatherMap
             como fuente de información del clima, y para la obtención de
-            coordenadas (latitud y longitud) de la ciudad buscada.{"\n"}
+            coordenadas (latitud y longitud) de la ciudad buscada.
             <Text
               style={styles.links}
               onPress={() => Linking.openURL("https://openweathermap.org/")}
             >
-              https://openweathermap.org/{"\n"}
-            </Text>
-          </Text>
-          <Text style={styles.textos}>
-            Para generar la API Key y obtener la respuesta con la informacion
-            referente al clima se utilizo openweathermap.{"\n"}
-            <Text
-              style={styles.links}
-              onPress={() =>
-                Linking.openURL("https://openweathermap.org/current")
-              }
-            >
-              'https://openweathermap.org/current'{"\n"}
+              https://openweathermap.org/
             </Text>
           </Text>
           <Text style={styles.textos}>
             Para visualizar la ciudad buscada y seleccionada en el mapa se
-            utilizo la API de Google Maps {"\n"}
+            utilizo la API de Google Maps.
           </Text>
         </View>
       </ScrollView>
@@ -126,7 +122,7 @@ const styles = StyleSheet.create({
     padding: 5,
     marginHorizontal: 10,
     borderRadius: 20,
-    marginBottom: 10,
+    marginBottom: 150,
     marginTop: -20
   },
   textos1: {
@@ -140,12 +136,13 @@ const styles = StyleSheet.create({
   textos: {
     fontWeight: "bold",
     color: "black",
-    marginTop: 5,
+    marginTop: 10,
     marginLeft: 15,
     marginRight: 15,
     textAlign: "justify",
     fontSize: 18,
     lineHeight: 20,
+    marginBottom: 10,
   },
   img: {
     flex: 1,
@@ -178,8 +175,16 @@ const styles = StyleSheet.create({
     textDecorationLine: "underline",
     color: "blue",
   },
+  iconosSociales: {
+    width: 35,
+    height: 35,
+    marginHorizontal: 5
+  },
+  datosPersonales: {
+    flex: 1,
+    flexDirection:"row",
+    justifyContent: "flex-start",
+    alignItems: "center",
+    padding: 10
+  }
 });
-
-//<StatusBar style="auto" />;
-
-//https://www.linkedin.com/in/maria-de-la-paz-marzana/
