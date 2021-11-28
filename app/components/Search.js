@@ -88,7 +88,7 @@ const Search = ({ navigation }) => {
                 {element.name}
               </Text>
               <Text key={`${element.id}latlon`} style={styles.listaItemLatLon}>
-                Lat: {element.lat} Lon: {element.lon}
+                Lat: {element.lat.toFixed(2)} Lon: {element.lon.toFixed(2)}
               </Text>
             </View>
             <Button

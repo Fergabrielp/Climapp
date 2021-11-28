@@ -11,11 +11,11 @@ export default function Nosotros() {
     >
       <StatusBar backgroundColor="#FFc107" barStyle="dark-content" />
       <ScrollView style={styles.container}>
-        <View style={styles.container2}>
+        <View>
           <Text style={styles.titulo1}>¿Quienes somos?</Text>
         </View>
         <View>
-          <Animacion1 />
+          <Animacion1/>
         </View>
         <View style={styles.containerGen}>
           <View>
@@ -24,6 +24,7 @@ export default function Nosotros() {
             </Text>
             <View style={styles.datosPersonales}>
               <Text style={styles.nombres}>
+              {/* <Animacion1/> */}
                 - Fernando Perez
               </Text>
               <SocialIcon style={styles.iconosSociales}
@@ -112,15 +113,12 @@ export default function Nosotros() {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-  },
-  container2: {
-    alignItems: "center",
+    flex: 1
   },
   containerGen: {
     backgroundColor: "#F9F6F7",
     padding: 5,
-    marginHorizontal: 10,
+    marginHorizontal: '3%',
     borderRadius: 20,
     marginBottom: 150,
     marginTop: -20
@@ -129,9 +127,8 @@ const styles = StyleSheet.create({
     marginTop: 20,
     color: "black",
     fontWeight: "bold",
-    marginLeft: 15,
-    marginRight: 25,
-    fontSize: 18,
+    marginHorizontal: 15,
+    fontSize: 18
   },
   textos: {
     fontWeight: "bold",
@@ -141,25 +138,17 @@ const styles = StyleSheet.create({
     marginRight: 15,
     textAlign: "justify",
     fontSize: 18,
-    lineHeight: 20,
-    marginBottom: 10,
+    marginBottom: 10
   },
   img: {
-    flex: 1,
-    alignItems: "center",
-    resizeMode: "cover",
-  },
-  logoImg: {
-    width: 400,
-    height: 400,
-    marginLeft: 10,
-    marginRight: 10,
+    flex: 1
   },
   titulo1: {
     marginTop: 50,
-    fontSize: 30,
+    fontSize: 35,
     color: "white",
-    textAlign:"center"
+    textAlign:"center",
+    fontWeight: 'bold'
   },
   nombres: {
     fontWeight: "bold",
@@ -176,15 +165,14 @@ const styles = StyleSheet.create({
     color: "blue",
   },
   iconosSociales: {
-    width: 35,
-    height: 35,
-    marginHorizontal: 5
+    width: 30,
+    height: 30,
+    marginHorizontal: 2
   },
   datosPersonales: {
-    flex: 1,
     flexDirection:"row",
     justifyContent: "flex-start",
     alignItems: "center",
-    padding: 10
+    padding: 5
   }
 });
