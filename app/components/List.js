@@ -4,7 +4,7 @@ import { View, Text, StyleSheet, FlatList, ImageBackground, TouchableOpacity} fr
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useIsFocused } from '@react-navigation/native';
 import SearchBar from './SearchBar';
-import MapVariasCiudades from '../components/MapVariasCiudades';
+// import MapVariasCiudades from '../components/MapVariasCiudades';
 
 
 const List = ({navigation}) => {
@@ -67,7 +67,7 @@ const List = ({navigation}) => {
               <Icon name="weather-cloudy" type='material-community' color='#FFF' key={`${item.id}icon1`}/>
             </TouchableOpacity>
             <TouchableOpacity
-              style={styles.listaItemButton} 
+              style={styles.listaItemButtonDelete} 
               onPress={()=> {
                 eliminarCiudad(item.id);
                 storeData(ciudadesGuardadas.filter( ciudad => (ciudad.id != item.id) ))
@@ -94,7 +94,7 @@ const List = ({navigation}) => {
               <Icon name="weather-cloudy" type='material-community' color='#FFF' key={`${item.id}icon1`}/>
             </TouchableOpacity>
             <TouchableOpacity
-              style={styles.listaItemButton} 
+              style={styles.listaItemButtonDelete} 
               onPress={()=> {
                 eliminarCiudad(item.id);
                 storeData(ciudadesGuardadas.filter( ciudad => (ciudad.id != item.id) ))
@@ -118,7 +118,7 @@ return (
       {!clicked  && (<View style={styles.container_title}>
         <Text style={styles.title}>Listado de ciudades</Text>
       </View>)}
-      <SearchBar style={styles.searchBar}
+      <SearchBar
         clicked={clicked}
         setClicked={setClicked}
         searchPhrase={searchPhrase}
@@ -142,7 +142,7 @@ return (
       > 
           <Icon name="plus" type='material-community'/>
       </TouchableOpacity>
-      <MapVariasCiudades style={styles.mapaVariasCiudades} listaCiudades={ciudadesAMostrar} mapaVisible={mapaVisible}></MapVariasCiudades>
+      {/* <MapVariasCiudades style={styles.mapaVariasCiudades} listaCiudades={ciudadesAMostrar} mapaVisible={mapaVisible}></MapVariasCiudades> */}
     </ImageBackground>    
   </View> 
   );
@@ -175,10 +175,7 @@ const styles = StyleSheet.create({
         // width: '100%',
     },
     flatList:{
-      // marginBottom: 20,
-    },
-    searchBar:{
-      // width: '60%'
+      height: 300
     },
     itemsBox:{
         // backgroundColor: '#F21',
@@ -236,16 +233,13 @@ const styles = StyleSheet.create({
     btn: {
         backgroundColor: '#FFc107',
         justifyContent: 'center',
-
         borderRadius: 100,
         borderWidth: 2,
         height: 70,
         width: 70,
         alignSelf: 'flex-end',
-        // alignSelf: 'flex-start',
-
         right: 20,
-        bottom: 130,
+        bottom: -20,
         shadowColor: "#000",
         elevation: 30
     },

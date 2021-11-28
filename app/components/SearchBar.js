@@ -14,7 +14,7 @@ const SearchBar = ({clicked, setClicked, searchPhrase, setSearchPhrase}) => {
         }
       >
         <Icon name="magnify" type='material-community'
-         color='#FFF' size={20} style={{ marginLeft: 1 }}/>
+         color='#FFF' size={20} iconStyle={{paddingLeft: 15}}/>
 
         <TextInput
           style={styles.input}
@@ -27,7 +27,7 @@ const SearchBar = ({clicked, setClicked, searchPhrase, setSearchPhrase}) => {
         />
         {clicked && (
           <Icon name="close-circle-outline" type='material-community'
-          color='#FFF' size={20} style={{ padding: 1 }}
+          color='#FFF' size={20} iconStyle={{paddingRight: 15}}
           onPress={() => {
                     setSearchPhrase("")
                 }}
@@ -35,8 +35,9 @@ const SearchBar = ({clicked, setClicked, searchPhrase, setSearchPhrase}) => {
         )}
       </View>
       {clicked && (
-        <View>
+        <View style={styles.close}>
           <Button
+            color='red'
             title="Cerrar"
             onPress={() => {
               Keyboard.dismiss();
@@ -57,33 +58,32 @@ const styles = StyleSheet.create({
     alignItems: "center",
     flexDirection: "row",
     width: "80%",
-    // marginTop: 50,
-    marginBottom: 10,
+    marginTop: -40,
+    marginBottom: 15,
   },
   searchBarUnclicked: {
-    padding: 10,
+    padding: 3,
     flexDirection: "row",
     width: "80%",
     // backgroundColor: "#d9dbda",
     backgroundColor: "#ffffff80",
-
-    borderRadius: 15,
+    borderRadius: 5,
     alignItems: "center",
     marginHorizontal: 10,
     marginTop: 20,
 
   },
   searchBarClicked: {
-    padding: 10,
+    padding: 3,
     flexDirection: "row",
     width: "70%",
     // backgroundColor: "#d9dbda",
     backgroundColor: "#ffffff80",
-    borderRadius: 15,
+    borderRadius: 3,
     alignItems: "center",
     justifyContent: "space-evenly",
     marginHorizontal: 10,
-    marginTop: 20,
+    marginTop: 70,
   },
   input: {
     fontSize: 20,
@@ -91,6 +91,8 @@ const styles = StyleSheet.create({
     marginLeft: 10,
     width: "90%",
     color: '#FFF',
-
   },
+  close:{
+    marginTop: 70 
+  }
 });
