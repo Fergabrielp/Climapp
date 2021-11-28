@@ -1,6 +1,6 @@
 ﻿# Climapp
 
-![1](https://user-images.githubusercontent.com/88584244/143779629-2ffa4013-3ea5-4ad6-9ae8-ae5799e06487.gif)
+![5vtxsp](https://user-images.githubusercontent.com/88584244/143779813-173d9a2c-53d5-4bec-adfd-f3bc2575e8b0.gif)
 
 Aplicacion creada como proyecto grupal del curso:
 Curso de especialización en desarrollo mobile - Codo a Codo | IBM Skillsbuild
