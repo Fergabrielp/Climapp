@@ -142,7 +142,7 @@ return (
       > 
           <Icon name="plus" type='material-community'/>
       </TouchableOpacity>
-      <MapVariasCiudades style={styles.mapaVariasCiudades} listaCiudades={ciudadesAMostrar} mapaVisible={mapaVisible}></MapVariasCiudades>
+      {/* <MapVariasCiudades style={styles.mapaVariasCiudades} listaCiudades={ciudadesAMostrar} mapaVisible={mapaVisible}></MapVariasCiudades> */}
     </ImageBackground>    
   </View> 
   );

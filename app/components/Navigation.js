@@ -5,8 +5,8 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Icon, TabView } from 'react-native-elements'
 import Home from './Home';
 import Nosotros from './Nosotros';
-
 import ListScreenStack from './ListScreenStack';
+import MapVariasCiudades from './MapVariasCiudades';
 
 
 const Tab = createBottomTabNavigator();
@@ -47,6 +47,7 @@ const Navigation = () => {
                 >
                     <Tab.Screen name="Home" component={Home}/>
                     <Tab.Screen name="ListStack" component={ListScreenStack}/>
+                    <Tab.Screen name="Mapa" component={MapVariasCiudades}/>
                     <Tab.Screen name="Nosotros" component={Nosotros}/>
 
                 </Tab.Navigator>
@@ -68,6 +69,9 @@ function screenOptions(route, color){
             break;
         case "ListStack":
             iconName = "format-list-bulleted"
+            break;
+        case "Mapa":
+            iconName = "map-outline"
             break;
         case "Nosotros":
             iconName = "information-outline"
