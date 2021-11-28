@@ -4,11 +4,14 @@ import { View, Text, StyleSheet, FlatList, ImageBackground, TouchableOpacity} fr
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useIsFocused } from '@react-navigation/native';
 import SearchBar from './SearchBar';
+import MapVariasCiudades from '../components/MapVariasCiudades';
+
 
 const List = ({navigation}) => {
   const [ciudadesGuardadas, setCiudadesGuardadas] = useState([{}]);
   const [searchPhrase, setSearchPhrase] = useState("");
   const [clicked, setClicked] = useState(false);
+  const [mapaVisible,setMapaVisible] = useState(true);
 
   const isFocused = useIsFocused();
 
@@ -139,6 +142,7 @@ return (
       > 
           <Icon name="plus" type='material-community'/>
       </TouchableOpacity>
+      <MapVariasCiudades style={styles.mapaVariasCiudades} listaCiudades={ciudadesAMostrar} mapaVisible={mapaVisible}></MapVariasCiudades>
     </ImageBackground>    
   </View> 
   );
@@ -166,7 +170,7 @@ const styles = StyleSheet.create({
         marginBottom: 30,
     },
     container_flat:{
-        marginBottom: 150,
+        // marginBottom: 150,
         width: '80%',
         // width: '100%',
     },
@@ -244,7 +248,10 @@ const styles = StyleSheet.create({
         bottom: 130,
         shadowColor: "#000",
         elevation: 30
-      },
+    },
+    mapaVariasCiudades:{
+      marginBottom: 150,
+    }
 })
 
 export default List

@@ -34,7 +34,7 @@ export default Map
 const styles = StyleSheet.create({
     mapCiudad:{
         width: '100%',
-        height: '60%',
-        marginBottom: 30
+        height: '100%',
+        // marginBottom: 30
       }
 })
